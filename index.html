@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tún Chịnh sinh nhật vui vẻ</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #0d1a26 0%, #000 100%);
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .center-constellation {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .center-constellation img {
+      width: 300px;
+      opacity: 0.9;
+    }
+
+    .star, .image-star, .message {
+      position: absolute;
+      opacity: 0.8;
+    }
+
+    .star {
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px #ffffff; /* ánh sáng trắng */
+      animation: glow 2s infinite ease-in-out, twinkle 2s infinite ease-in-out;
+    }
+
+    .image-star img {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+      border: none;
+      display: block;
+    }
+
+    .message {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 500;
+      white-space: nowrap;
+      font-family: 'Pacifico', 'Segoe UI', 'Comic Sans MS', cursive;
+      text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .center-constellation img {
+        width: 180px;
+      }
+
+      .image-star img {
+        width: 60px !important;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .center-constellation img {
+        width: 140px;
+      }
+
+      .image-star img {
+        width: 50px !important;
+      }
+
+      .message {
+        font-size: 14px;
+      }
+    }
+
+
+    @keyframes flyUp {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; 
+      }
+    }
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 6px 2px #ffffff;
+      }
+      50% {
+        box-shadow: 0 0 12px 4px #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="center-constellation">
+    <img src="cancer.png" alt="Tún Chịnh">
+  </div>
+
+<button onclick="document.getElementById('bgMusic').play()">Play</button>
+
+<audio id="bgMusic" loop>
+  <source src="ccnn.mp3" type="audio/mpeg">
+</audio>
+
+
+  <script>
+    const uploadedImages = [
+      "dji_0480.jpg",
+      "dji_0484.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg",
+      "8.jpg",
+      "9.jpg",
+      "10.jpg",
+      "11.jpg",
+      "img_3164.jpg",
+      "img_3173.jpg",
+      "img_5119ab.jpg",
+      "img_5120.jpg",
+      "img_5153.jpg",
+      "img_5327.jpg",
+      "img_5328.jpg",
+      "img_5329.jpg",
+      "img_5330.jpg",
+      "img_5331.jpg",
+      "img_5332.jpg",
+      "img_5333.jpg",
+      "img_5334.jpg",
+      "img_5335.jpg"
+    ];
+
+    const birthdayMessages = [
+      "Hép pì bớt đây",
+      "Luôn vui tươi!",
+      "Hạnh phúc nhé!",
+      "Sinh nhật thật rực rỡ!",
+      "Tún Chịnh sinh nhật vui vẻ  🎉",
+      "18.07.1996",
+      "18.07.2025"
+    ];
+
+    function createStar() {
+      const rand = Math.random();
+      const star = document.createElement('div');
+      const duration = Math.random() * 5 + 10; // 10s đến 15s
+
+      if (uploadedImages.length > 0 && rand < 0.2) {
+        star.classList.add('image-star');
+        const img = document.createElement('img');
+        const selectedImage = uploadedImages[Math.floor(Math.random() * uploadedImages.length)];
+        img.src = selectedImage;
+        img.style.width = `${Math.random() * 2 + 6}vw`; // 6–8vw
+        star.appendChild(img);
+      } else if (rand < 0.3) {
+        // Tạo lời chúc
+        star.classList.add('message');
+        star.textContent = birthdayMessages[Math.floor(Math.random() * birthdayMessages.length)];
+      } else {
+        // Ngôi sao bình thường
+        star.classList.add('star');
+        const size = Math.random() * 3 + 2;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.background = 'white';
+        star.style.borderRadius = '50%';
+      }
+
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.bottom = '-30px';
+      star.style.animation = `twinkle 2s infinite ease-in-out, flyUp ${duration}s linear forwards`;
+
+      document.body.appendChild(star);
+
+      setTimeout(() => {
+        star.remove();
+      }, duration * 1000);
+    }
+
+    function createStaticTwinklingStars(count = 30) {
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        const size = Math.random() * 2 + 1;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const duration = Math.random() * 3 + 2;
+
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${x}vw`;
+        star.style.top = `${y}vh`;
+        star.style.animation = `twinkle ${duration}s infinite ease-in-out`;
+
+        document.body.appendChild(star);
+      }
+    }
+
+    setInterval(createStar, 400);
+    createStaticTwinklingStars(40);
+  </script>
+</body>
+</html>
